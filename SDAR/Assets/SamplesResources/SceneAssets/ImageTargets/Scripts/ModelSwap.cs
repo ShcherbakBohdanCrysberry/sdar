@@ -1,5 +1,5 @@
 ﻿/*============================================================================== 
- Copyright (c) 2016-2017 PTC Inc. All Rights Reserved.
+ Copyright (c) 2016-2018 PTC Inc. All Rights Reserved.
  
  Copyright (c) 2015 Qualcomm Connected Experiences, Inc. All Rights Reserved. 
  * ==============================================================================*/
@@ -9,8 +9,8 @@ public class ModelSwap : MonoBehaviour
 {
     #region PRIVATE_MEMBERS
 
-    [SerializeField] GameObject m_DefaultModel;
-    [SerializeField] GameObject m_ExtTrackedModel;
+    [SerializeField] GameObject m_DefaultModel = null;
+    [SerializeField] GameObject m_ExtendedModel = null;
     GameObject m_ActiveModel;
     TrackableSettings m_TrackableSettings;
 
@@ -26,17 +26,17 @@ public class ModelSwap : MonoBehaviour
 
     void Update()
     {
-        if (m_TrackableSettings.IsExtendedTrackingEnabled() && (m_ActiveModel == m_DefaultModel))
+        if (m_TrackableSettings.IsDeviceTrackingEnabled() && (m_ActiveModel == m_DefaultModel))
         {
             // Switch default augmentation to extended tracking augmentation
             m_DefaultModel.SetActive(false);
-            m_ExtTrackedModel.SetActive(true);
-            m_ActiveModel = m_ExtTrackedModel;
+            m_ExtendedModel.SetActive(true);
+            m_ActiveModel = m_ExtendedModel;
         }
-        else if (!m_TrackableSettings.IsExtendedTrackingEnabled() && (m_ActiveModel == m_ExtTrackedModel))
+        else if (!m_TrackableSettings.IsDeviceTrackingEnabled() && (m_ActiveModel == m_ExtendedModel))
         {
             // Switch extended tracking augmentation to default augmentation
-            m_ExtTrackedModel.SetActive(false);
+            m_ExtendedModel.SetActive(false);
             m_DefaultModel.SetActive(true);
             m_ActiveModel = m_DefaultModel;
         }
