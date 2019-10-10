@@ -91,13 +91,13 @@ namespace NatCorder.Examples {
         private void OnReplay (string path) {
             Debug.Log("Saved recording to: "+path);
             // Playback the video
-            #if UNITY_EDITOR
-			EditorUtility.OpenWithDefaultApp(path);
-            #elif UNITY_IOS
-            Handheld.PlayFullScreenMovie("file://" + path);
-            #elif UNITY_ANDROID
-            Handheld.PlayFullScreenMovie(path);
-            #endif
+   //         #if UNITY_EDITOR
+			//EditorUtility.OpenWithDefaultApp(path);
+            //#elif UNITY_IOS
+            //Handheld.PlayFullScreenMovie("file://" + path);
+            //#elif UNITY_ANDROID
+            //Handheld.PlayFullScreenMovie(path);
+            //#endif
         }
     }
 }
