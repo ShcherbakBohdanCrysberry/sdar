@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AR/3-ImageTargets.unity
     guid: fa05b4f596c584dc79960294a1b601cc
+  - enabled: 1
+    path: Assets/Scenes/ImagePickerScene/ImagePickerScene.unity
+    guid: 9c38e982c8685564788f25bd4b1107c4
   m_configObjects: {}

@@ -3,17 +3,19 @@
 *   Copyright (c) 2019 Yusuf Olokoba
 */
 
-namespace NatCorder.Examples {
+namespace NatCorder.Examples
+{
 
-    #if UNITY_EDITOR
-	using UnityEditor;
-	#endif
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
     using UnityEngine;
     using Clocks;
     using Inputs;
-    
+    using System;
 
-    public class ReplayCam : MonoBehaviour {
+    public class ReplayCam : MonoBehaviour
+    {
 
         /**
         * ReplayCam Example
@@ -37,7 +39,8 @@ namespace NatCorder.Examples {
         private CameraInput cameraInput;
         private AudioInput audioInput;
 
-        public void StartRecording () {
+        public void StartRecording()
+        {
             // Start recording
             videoWidth = Screen.width;
             videoHeight = videoWidth * Screen.height / Screen.width;
@@ -53,26 +56,30 @@ namespace NatCorder.Examples {
             );
             // Create recording inputs
             cameraInput = new CameraInput(videoRecorder, recordingClock, Camera.main);
-            if (recordMicrophone) {
+            if (recordMicrophone)
+            {
                 StartMicrophone();
                 audioInput = new AudioInput(videoRecorder, recordingClock, microphoneSource, true);
             }
         }
 
-        private void StartMicrophone () {
-            #if !UNITY_WEBGL || UNITY_EDITOR // No `Microphone` API on WebGL :(
+        private void StartMicrophone()
+        {
+#if !UNITY_WEBGL || UNITY_EDITOR // No `Microphone` API on WebGL :(
             // Create a microphone clip
             microphoneSource.clip = Microphone.Start(null, true, 60, 48000);
             // Play through audio source
             microphoneSource.timeSamples = Microphone.GetPosition(null);
             microphoneSource.loop = true;
             microphoneSource.Play();
-            #endif
+#endif
         }
 
-        public void StopRecording () {
+        public void StopRecording()
+        {
             // Stop the recording inputs
-            if (recordMicrophone) {
+            if (recordMicrophone)
+            {
                 StopMicrophone();
                 audioInput.Dispose();
             }
@@ -81,18 +88,26 @@ namespace NatCorder.Examples {
             videoRecorder.Dispose();
         }
 
-        private void StopMicrophone () {
-            #if !UNITY_WEBGL || UNITY_EDITOR
+        private void StopMicrophone()
+        {
+#if !UNITY_WEBGL || UNITY_EDITOR
             Microphone.End(null);
             microphoneSource.Stop();
-            #endif
+#endif
         }
 
-        private void OnReplay (string path) {
-            Debug.Log("Saved recording to: "+path);
+        private void OnReplay(string path)
+        {
+            Guid g;
+            g = Guid.NewGuid(); Debug.Log("Saved recording to: " + path);
+#if UNITY_IOS
+            NativeGallery.SaveVideoToGallery("file://" + path, "GalleryTest", g +".mp4");
+#elif UNITY_ANDROID
+            NativeGallery.SaveVideoToGallery(path, "GalleryTest", g +".mp4");
+#endif
             // Playback the video
-   //         #if UNITY_EDITOR
-			//EditorUtility.OpenWithDefaultApp(path);
+            //         #if UNITY_EDITOR
+            //EditorUtility.OpenWithDefaultApp(path);
             //#elif UNITY_IOS
             //Handheld.PlayFullScreenMovie("file://" + path);
             //#elif UNITY_ANDROID

@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class NavigationHandler : MonoBehaviour
 {
     #region PUBLIC_MEMBERS
-    public string m_BackButtonNavigation = "[Name of Scene To Load]";
+    public string m_ButtonNavigation = "[Name of Scene To Load]";
     #endregion // PUBLIC_MEMBERS
 
 
@@ -31,8 +31,8 @@ public class NavigationHandler : MonoBehaviour
     public void HandleBackButtonPressed()
     {
         Debug.Log("HandleBackButtonPressed() called.");
-        if (SceneManager.GetActiveScene().name != m_BackButtonNavigation)
-            LoadScene(m_BackButtonNavigation);
+        if (SceneManager.GetActiveScene().name != m_ButtonNavigation)
+            LoadScene(m_ButtonNavigation);
     }
     #endregion // PUBLIC_METHODS
 
