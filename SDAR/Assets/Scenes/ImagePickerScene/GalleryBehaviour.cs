@@ -6,9 +6,9 @@ using UnityEngine.Android;
 #endif
 
 
-public class GalleryBehaviour : MonoBehaviour
+public class GalleryBehaviour 
 {
-    private void Start()
+    public GalleryBehaviour()
     {
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
             if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
@@ -34,39 +34,48 @@ public class GalleryBehaviour : MonoBehaviour
         Debug.Log("Permission result: " + NativeGallery.SaveImageToGallery(ss, "GalleryTest", "Image.png"));
 
         // To avoid memory leaks
-        Destroy(ss);
+        //Destroy(ss);
     }
 
-    public void PickImage(GameObject [] gosToShowImage)
+    public void PickImage(GameObject go)
     {
-        NativeGallery.Permission permission = NativeGallery.GetImagesFromGallery((paths) =>
+        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
         {
-            if (paths != null)
-            {
-                if (paths.Length > 0)
-                {
-                    for (int i = 0; i <= paths.Length - 1; i++)
-                    {
-                        if (gosToShowImage.Length - 1 < i) continue;
+            
                         // Create Texture from selected image
-                        Texture2D texture = NativeGallery.LoadImageAtPath(paths[i], 512);
+                        Texture2D texture = NativeGallery.LoadImageAtPath(path, 512);
                         if (texture == null)
                         {
-                            Debug.Log("Couldn't load texture from " + paths[i]);
+                            Debug.Log("Couldn't load texture from " + path);
                             return;
                         }
                         //quad.transform.localScale = new Vector3(1f, texture.height / (float)texture.width, 1f);
-                      
-                        Material material = gosToShowImage[i].GetComponent<Renderer>().material;
+
+                        Material material = go.GetComponent<Renderer>().material;
                         if (!material.shader.isSupported) // happens when Standard shader is not included in the build
                             material.shader = Shader.Find("Legacy Shaders/Diffuse");
 
                         material.mainTexture = texture;
-                    }
-                }
+            switch (go.name)
+            {
+                case "CenterCube":
+                    GameManager.Instance.CenterCubeTexture = texture;
+
+                    break;
+                case "LeftCube":
+                    GameManager.Instance.LeftCubeTexture = texture;
+
+                    break;
+                case "RightCube":
+                    GameManager.Instance.RightCubeTexture = texture;
+
+                    break;
+                default:break;
             }
         }, "Select a PNG image", "image/png");
 
         Debug.Log("Permission result: " + permission);
     }
+
+   
 }

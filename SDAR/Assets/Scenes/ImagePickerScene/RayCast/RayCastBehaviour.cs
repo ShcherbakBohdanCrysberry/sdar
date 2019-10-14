@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class RayCastBehaviour : MonoBehaviour
 {
-    private GalleryBehaviour galleryBehaviour;
-    public GameObject[] gos;
+    //private GalleryBehaviour galleryBehaviour;
+    public GameObject LeftCube;
+    public GameObject RightCube;
+    public GameObject CenterCube;
     private void Start()
     {
-        this.galleryBehaviour = this.gameObject.GetComponent<GalleryBehaviour>();
+        //this.galleryBehaviour = this.gameObject.GetComponent<GalleryBehaviour>();
     }
 
     private void Update()
@@ -31,8 +33,24 @@ public class RayCastBehaviour : MonoBehaviour
         //}
     }
 
-    public void PickImages()
+    public void PickImageLeft()
     {
-        galleryBehaviour.PickImage(gos);
+        var galleryBehaviour = new GalleryBehaviour();
+        galleryBehaviour.PickImage(LeftCube);
+        
+    }
+
+    public void PickImageRight()
+    {
+        var galleryBehaviour = new GalleryBehaviour();
+        galleryBehaviour.PickImage(RightCube);
+
+    }
+
+    public void PickImageCenter()
+    {
+        var galleryBehaviour = new GalleryBehaviour();
+        galleryBehaviour.PickImage(CenterCube);
+
     }
 }
