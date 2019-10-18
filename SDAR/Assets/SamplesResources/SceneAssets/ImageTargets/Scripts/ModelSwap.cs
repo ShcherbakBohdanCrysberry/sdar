@@ -8,7 +8,6 @@ using UnityEngine;
 public class ModelSwap : MonoBehaviour
 {
     #region PRIVATE_MEMBERS
-
     [SerializeField] GameObject m_DefaultModel = null;
     [SerializeField] GameObject m_ExtendedModel = null;
     GameObject m_ActiveModel;
@@ -32,6 +31,7 @@ public class ModelSwap : MonoBehaviour
             m_DefaultModel.SetActive(false);
             m_ExtendedModel.SetActive(true);
             m_ActiveModel = m_ExtendedModel;
+
         }
         else if (!m_TrackableSettings.IsDeviceTrackingEnabled() && (m_ActiveModel == m_ExtendedModel))
         {
@@ -39,6 +39,7 @@ public class ModelSwap : MonoBehaviour
             m_ExtendedModel.SetActive(false);
             m_DefaultModel.SetActive(true);
             m_ActiveModel = m_DefaultModel;
+
         }
     }
 

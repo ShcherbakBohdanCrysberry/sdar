@@ -43,7 +43,7 @@ namespace NatCorder.Examples
         {
             // Start recording
             videoWidth = Screen.width;
-            videoHeight = videoWidth * Screen.height / Screen.width;
+            videoHeight = Screen.height;
 
             recordingClock = new RealtimeClock();
             videoRecorder = new MP4Recorder(
